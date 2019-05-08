@@ -1,2 +1,2 @@
-# graphql-react-demo
+# PokedexQL
 Demo project for graphql with react
