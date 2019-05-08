@@ -1,0 +1,30 @@
+{
+  "name": "graphql-react-demo",
+  "version": "1.0.0",
+  "description": "Demo project for graphql with react",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moezif-dev/graphql-react-demo.git"
+  },
+  "author": "Moe Alabandi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moezif-dev/graphql-react-demo/issues"
+  },
+  "homepage": "https://github.com/moezif-dev/graphql-react-demo#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "express-graphql": "^0.8.0",
+    "graphql": "^14.2.1",
+    "pokedex-promise-v2": "^3.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}
