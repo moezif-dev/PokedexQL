@@ -1,0 +1,44 @@
+$success: #22b24c;
+$success-border: #1a873a;
+$dark-success: #1c923e;
+$light-grey: #c8c8c8;
+$dark-grey: #aaaaaa;
+
+.checkmark{
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  float: right;
+  background: $light-grey;
+  border: 1px solid $dark-grey;
+  border-radius: 50px;
+  box-shadow: 0 0 3px 0.3px #888;
+  transition: all .15s ease-in;
+	cursor: pointer;
+
+  &.success{
+  	background: $success;
+		border-color: $success-border;
+  	&:hover{
+  		background: $dark-success;
+  	}
+  }
+}
+
+.pokemon-sprite{
+	width: 100%;
+}
+
+.pokemon-name{
+	text-transform: capitalize;
+}
+
+.card{
+	.card-header{
+		.pokemon-sprite{
+			width: 75%;
+			display: block;
+			margin: 0 auto;
+		}
+	}
+}
