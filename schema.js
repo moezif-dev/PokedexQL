@@ -14,7 +14,7 @@ const {
 
 // helper method to get Pokemon Image by id
 const getPokemonImageById = (id) => {
-  return `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${id}.png`;
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
 };
 
 // Pokedex Type
@@ -116,14 +116,20 @@ const PokemonTypeType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    pokemons: {
+    pokedex: {
       type: PokedexType,
+      args: {
+        name: {type: GraphQLString, defaultValue: "kanto"},
+      },
       resolve(parentValue, args) {
+        const { name } = args;
+
         return pokedex
-          .getPokedexByName("kanto")
+          .getPokedexByName(name)
           .then(data => {
+            console.log(data);
             // merge pokemon_entries, and pokemon species into one object (pokemon_details)
-            const { pokemon_entries } = data;
+            const { pokemon_entries = []} = data;
             const pokemon_details = pokemon_entries.map((entry) => {
               const {
                 entry_number: id = "",
@@ -140,6 +146,46 @@ const RootQuery = new GraphQLObjectType({
               newEntry.image = getPokemonImageById(id);
 
               return newEntry;
+            });
+
+            // add pokemon details to response data
+            data.pokemon_details = pokemon_details;
+
+            return data;
+          });
+      }
+    },
+    pokemons: {
+      type: PokedexType,
+      args: {
+        limit: {type: GraphQLInt, defaultValue: 23},
+        offset: {type: GraphQLInt, defaultValue: 0},
+      },
+      resolve(parentValue, args) {
+        const { limit, offset } = args;
+        const options = { limit, offset };
+
+        return pokedex
+          .getPokemonsList(options)
+          .then(data => {
+            console.log(data);
+            // merge pokemon_entries, and pokemon species into one object (pokemon_details)
+            const { results = []} = data;
+            const pokemon_details = results.map((pokemon) => {
+              const {name, url} = pokemon;
+
+              const urlParts = url.split('/');
+              const id = urlParts[urlParts.length - 2];
+              const image = getPokemonImageById(id);
+              
+              const pokemonObject = {
+                id,
+                name,
+                image,
+              };
+
+
+              return pokemonObject;
             });
 
             // add pokemon details to response data
